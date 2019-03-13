@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register a new student</div>
+                <div class="panel-heading">Register</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
@@ -19,6 +19,34 @@
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                            <label for="last_name" class="col-md-4 control-label">Last name</label>
+
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control" name="last_name" required>
+
+                                @if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('br_indeksa') ? ' has-error' : '' }}">
+                            <label for="last_name" class="col-md-4 control-label">Broj indeksa</label>
+
+                            <div class="col-md-6">
+                                <input id="br_indeksa" type="text" class="form-control" name="br_indeksa" required>
+
+                                @if ($errors->has('br_indeksa'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('br_indeksa') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -63,7 +91,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Register
+                                    Create
                                 </button>
                             </div>
                         </div>
