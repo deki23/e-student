@@ -15,9 +15,9 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('naziv_predmeta');
-            $table->int('ocena');
-            $table->int('semestar');
+            $table->string('name');
+            $table->integer('ocena');
+            $table->integer('semestar');
             $table->integer('user_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users');

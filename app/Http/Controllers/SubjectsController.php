@@ -35,7 +35,7 @@ class SubjectsController extends Controller
      */
     public function create()
     {
-        //
+    
     }
 
     /**

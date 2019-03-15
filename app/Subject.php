@@ -8,8 +8,8 @@ class Subject extends Model
 {
     //
 
-    $protected= [
-      'naziv_predmeta',
+    protected $fillable = [
+      'name',
       'ocena',
       'semestar',
       'user_id'
