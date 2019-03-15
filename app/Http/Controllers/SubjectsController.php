@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Subject;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,9 +34,14 @@ class SubjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user_id = null)
     {
-    
+      $users=null;
+      if(!$user_id){
+        $users = User::where('user_id', $request->user_id);
+      }
+
+      return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
     }
 
     /**
@@ -47,6 +53,13 @@ class SubjectsController extends Controller
     public function store(Request $request)
     {
         //
+        if(Auth::check()){
+          $subject = Subject:create([
+            'name'=>$request->input('name'),
+            'semestar'=>$request->input('subject_semestar'),
+            'user_id'=>$request->input('user_id')
+          ]);
+        }
     }
 
     /**
