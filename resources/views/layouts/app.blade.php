@@ -19,6 +19,13 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -60,8 +67,8 @@
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
                                   <li><a href="{{route('register')}}">Add student</a></li>
-                                  <li><a href="">Add subjects to students</a></li>
-                                  <li><a href="">All Students</a></li>
+                                  <li><a href="{{route('subjects.create')}}">Add subjects to students</a></li>
+                                  <li><a href="{{route('users.index')}}">All Students</a></li>
                                 </ul>
                             </li>
                         @endif

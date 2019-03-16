@@ -19,5 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('admin/addsubjects','SubjectsController@create');
-Route::resource('users','UsersController');
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('subjects', 'SubjectsController');
+    Route::resource('users','UsersController');
+});

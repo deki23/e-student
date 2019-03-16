@@ -19,9 +19,10 @@ class SubjectsController extends Controller
         //
 
         if(Auth::check() ){
-          $subjects = Subject::where('user_id', Auth::user()->id)->get();
-
-          return view('subjects.index', ['subjects'=> $subjects]);
+          $predmet =  Auth::user()->id;
+          $subjects = Subject::where('user_id', $predmet)->get();
+          return view('subjects.index')
+                ->with('subjects', $subjects);
         }
 
         return view('auth.login');
@@ -36,12 +37,16 @@ class SubjectsController extends Controller
      */
     public function create($user_id = null)
     {
+      if(Auth::user()->admin==1){
       $users=null;
       if(!$user_id){
-        $users = User::where('user_id', $request->user_id);
+        $users = User::where('user_id', $user_id);
+        return view('subjects.create')
+              ->with('users', User::all());
+            }
       }
 
-      return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
+      return view('403');
     }
 
     /**
@@ -53,12 +58,20 @@ class SubjectsController extends Controller
     public function store(Request $request)
     {
         //
-        if(Auth::check()){
-          $subject = Subject:create([
-            'name'=>$request->input('name'),
-            'semestar'=>$request->input('subject_semestar'),
-            'user_id'=>$request->input('user_id')
-          ]);
+
+        $this->validate($request, [
+            'name'=>'required|max:125',
+            'semestar'=>'required',
+            'user_id'=>'required'
+        ]);
+        if (Auth::user()->admin==1) {
+          $subject = new Subject;
+          $subject->name = $request->input('name');
+          $subject->semestar = $request->input('semestar');
+          $subject->user_id = $request->input('user_id');
+          $subject->save();
+
+          return redirect('subjects');
         }
     }
 
