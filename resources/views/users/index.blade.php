@@ -31,9 +31,24 @@
   <td>{{$user->br_indeksa}}</td>
   <td>{{$user->email}}</td>
   <td>{{$user->admin}}</td>
-  <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-  <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+  <td><a href="/users/{{$user->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
+  <td><a
+                  href="#"
+                      onclick="
+                      var result=confirm('Da li ste sigurni da zelite da izbrisete ovog Studenta?');
+                        if(result){
+                                event.preventDefault();
+                                document.getElementById('delete-form').submit();
+                        }
+                      "
+                      >
+                      <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button></p></a></td>
   </tr>
+
+  <form id="delete-form" action="{{ route('users.destroy', [$user->id]) }}" method="post" style="display:none;">
+                     <input type="hidden" name="_method" value="DELETE">
+                     {{ csrf_field() }}
+                  </form>
 @endforeach
   </tbody>
 

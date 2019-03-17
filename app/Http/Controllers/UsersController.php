@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,10 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         //
+
+        $user = User::find($user->id);
+
+        return view('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -74,6 +79,20 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        $userUpdate = User::where('id', $user->id)
+              ->update([
+                    'name'=>$request->input('name'),
+                    'last_name'=>$request->input('last_name'),
+                    'email'=>$request->input('email'),
+                    'password'=>$request->input('password')
+                  ]);
+
+        if($userUpdate){
+            return redirect()->route('users.show',['user'=>$user->id])
+            ->with('success' , 'User updated successfully!');
+        }
+
+        return back()->withInput();
     }
 
     /**
@@ -85,5 +104,16 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+
+        $findUser = User::where('id', $user->id);
+        $findSubjects = Subject::where('user_id', $user->id);
+        $findSubjects->delete();
+        if($findUser->delete()){
+
+          return redirect()->route('users.index')
+              ->with('success', 'User deleted successfully');
+        }
+
+        return back()->withInput()->with('error', 'User could not be deleted');
     }
 }
