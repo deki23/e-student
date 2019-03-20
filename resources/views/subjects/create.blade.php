@@ -23,7 +23,7 @@
                                   />
                                   @endif
                     </div>
-                    
+
                     @if($users != null)
                     <div class="form-group">
                       <label for="user-content">Select user</label>

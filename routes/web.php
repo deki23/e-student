@@ -22,4 +22,5 @@ Route::get('/home', 'HomeController@index');
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('subjects', 'SubjectsController');
     Route::resource('users','UsersController');
+    Route::get('subjects/create/{user_id?}', 'SubjectsController@create');
 });

@@ -40,14 +40,14 @@ class SubjectsController extends Controller
       if(Auth::user()->admin==1){
       $users=null;
       if(!$user_id){
-        $users = User::where('user_id', $user_id);
+        $users = User::where('id', $user_id);
         return view('subjects.create')
-              ->with('users', User::all());
+        ->with('users', User::all());
+      }
+        return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
             }
       }
 
-      return view('403');
-    }
 
     /**
      * Store a newly created resource in storage.

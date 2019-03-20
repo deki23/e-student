@@ -84,11 +84,11 @@ class UsersController extends Controller
                     'name'=>$request->input('name'),
                     'last_name'=>$request->input('last_name'),
                     'email'=>$request->input('email'),
-                    'password'=>$request->input('password')
+                    'br_indeksa'=>$request->input('br_indeksa')
                   ]);
 
         if($userUpdate){
-            return redirect()->route('users.show',['user'=>$user->id])
+            return redirect()->route('users.index')
             ->with('success' , 'User updated successfully!');
         }
 
@@ -101,19 +101,15 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
 
-        $findUser = User::where('id', $user->id);
-        $findSubjects = Subject::where('user_id', $user->id);
+        $findUser = User::where('id', $id);
+        $findSubjects = Subject::where('user_id', $id);
         $findSubjects->delete();
         if($findUser->delete()){
-
-          return redirect()->route('users.index')
-              ->with('success', 'User deleted successfully');
-        }
-
+          return redirect()->route('users.index');
+  }
         return back()->withInput()->with('error', 'User could not be deleted');
     }
 }
