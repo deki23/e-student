@@ -20,7 +20,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::resource('students','StudentsController');
     Route::resource('subjects', 'SubjectsController');
     Route::resource('users','UsersController');
     Route::get('subjects/create/{user_id?}', 'SubjectsController@create');
+});
+
+
+Route::group(['middleware' => 'auth:students'], function() {
+    Route::resource('users','UsersController');
 });

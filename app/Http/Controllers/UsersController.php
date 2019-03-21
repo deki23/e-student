@@ -19,6 +19,7 @@ class UsersController extends Controller
         //
 
         return view('users.index')->with('users', Auth::user()->all());
+
     }
 
     /**
@@ -51,6 +52,11 @@ class UsersController extends Controller
     public function show(User $user)
     {
         //
+        if(Auth::user()->admin==1){
+
+        }
+
+        abort(401);
 
     }
 
@@ -63,10 +69,12 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         //
-
+        if(Auth::user()->admin==1){
         $user = User::find($user->id);
 
         return view('users.edit', ['user'=>$user]);
+      }
+        abort(401);
     }
 
     /**
@@ -103,13 +111,15 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-
+        if(Auth::user()->admin==1){
         $findUser = User::where('id', $id);
         $findSubjects = Subject::where('user_id', $id);
         $findSubjects->delete();
         if($findUser->delete()){
           return redirect()->route('users.index');
-  }
+        }
         return back()->withInput()->with('error', 'User could not be deleted');
-    }
+        }
+        abort(401);
+     }
 }

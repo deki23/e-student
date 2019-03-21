@@ -45,8 +45,9 @@ class SubjectsController extends Controller
         ->with('users', User::all());
       }
         return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
-            }
       }
+        abort(401);    
+     }
 
 
     /**
@@ -73,6 +74,8 @@ class SubjectsController extends Controller
 
           return redirect('subjects');
         }
+
+        abort(401);
     }
 
     /**
