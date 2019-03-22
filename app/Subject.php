@@ -19,6 +19,10 @@ class Subject extends Model
       return $this->belongsTo('App\User');
     }
 
+    public function student(){
+      return $this->belongsTo('App\Student');
+    }
+
 
 
 

@@ -46,7 +46,7 @@ return [
             'provider' => 'users',
         ],
 
-        'students' => [
+        'student' => [
             'driver' => 'session',
             'provider' => 'students',
         ],
@@ -76,7 +76,7 @@ return [
         ],
 
         'students' => [
-            'driver'=>'eloquent',
+            'driver' => 'eloquent',
             'model' => App\Student::class,
         ],
 
