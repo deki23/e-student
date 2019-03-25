@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Subject;
 use App\User;
+use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,11 +43,11 @@ class SubjectsController extends Controller
       if(!$user_id){
         $users = User::where('id', $user_id);
         return view('subjects.create')
-        ->with('users', User::all());
+        ->with('users', Student::all());
       }
         return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
       }
-        abort(401);    
+        abort(401);
      }
 
 

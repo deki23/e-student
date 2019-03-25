@@ -22,7 +22,6 @@
 
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>Add subjects</th>
                  </thead>
   <tbody>
 @foreach($users as $user)
@@ -43,11 +42,6 @@
 
 
       @endif
-  </td>
-  <td>
-    <a href="subjects/create/{{$user->id}}">
-            Add subjects
-          </a>
   </td>
   </tr>
 

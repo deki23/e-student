@@ -16,8 +16,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index');
+/*Route::get('/home', function () {
+    $users[] = Auth::user();
+    $users[] = Auth::guard()->user();
+    $users[] = Auth::guard('web')->user();
+    return view('home');
+})->name('home');*/
+  Route::get('students/home', 'StudentHomeController@index');
 Route::get('students/login', 'StudentAuth\LoginController@showLoginForm');
 Route::post('students/login', 'StudentAuth\LoginController@login');
 Route::post('students/logout', 'StudentAuth\LoginController@logout');
@@ -26,17 +32,18 @@ Route::post('students/password/reset', 'StudentAuth\ResetPasswordController@rese
 Route::get('students/password/reset', 'StudentAuth\ForgotPasswordController@showLinkRequestForm');
 Route::get('students/password/reset/{token}', 'StudentAuth\ResetPasswordController@showResetForm');
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'auth:web'], function() {
+  //  Route::get('/home', 'HomeController@index');
     Route::resource('students','StudentsController');
-    Route::resource('subjects', 'SubjectsController');
+    //Route::resource('subjects', 'SubjectsController');
     Route::resource('users','UsersController');
     Route::get('subjects/create/{users_id?}', 'SubjectsController@create');
 });
 
 
 Route::group(['middleware' => 'auth:student'], function() {
-    Route::resource('students','StudentsController');
-    Route::get('/home', 'HomeController@index');
+    Route::get('students/home', 'StudentHomeController@index');
+    Route::get('subjects', 'SubjectsController@index');
+
 
 });
