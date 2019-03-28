@@ -73,7 +73,7 @@ class SubjectsController extends Controller
           $subject->user_id = $request->input('user_id');
           $subject->save();
 
-          return redirect('subjects');
+          return redirect('students');
         }
 
         abort(401);
@@ -85,9 +85,11 @@ class SubjectsController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function show(Subject $subject)
+    public function show($id)
     {
         //
+        $subjects = Subject::where('user_id', $id)->get();
+        return view('subjects.show')->with('subjects', $subjects);
     }
 
     /**

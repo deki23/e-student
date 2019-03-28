@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,9 +19,7 @@ class StudentsController extends Controller
     public function index()
     {
         //
-        if(Auth::user()->admin==1){
         return view('students.index')->with('students', Student::all());
-      }
     }
 
     /**
@@ -52,7 +51,7 @@ class StudentsController extends Controller
             'password'=>'required|min:6'
         ]);
 
-        if (Auth::user()->admin==1) {
+
           $student = new Student;
           $student->name = $request->input('name');
           $student->last_name = $request->input('last_name');
@@ -61,8 +60,9 @@ class StudentsController extends Controller
           $student->password = bcrypt($request->input('password'));
           $student->save();
 
-          return redirect('students');
-        }
+
+          return redirect()->route('students.index');
+
     }
 
     /**
@@ -74,6 +74,7 @@ class StudentsController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -85,6 +86,9 @@ class StudentsController extends Controller
     public function edit($id)
     {
         //
+        $user = Student::find($id);
+
+        return view('students.edit', ['user'=>$user]);
     }
 
     /**
@@ -97,6 +101,19 @@ class StudentsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $studentUpdate = Student::where('id', $id)
+              ->update([
+                    'name'=>$request->input('name'),
+                    'last_name'=>$request->input('last_name'),
+                    'email'=>$request->input('email'),
+                    'br_indeksa'=>$request->input('br_indeksa')
+                  ]);
+
+        if($studentUpdate){
+            return redirect()->route('students.index');
+        }
+
+        return back()->withInput();
     }
 
     /**
@@ -108,5 +125,12 @@ class StudentsController extends Controller
     public function destroy($id)
     {
         //
+        $findUser = Student::where('id', $id);
+        $findSubjects = Subject::where('user_id', $id);
+        $findSubjects->delete();
+        if($findUser->delete()){
+          return redirect()->route('students.index');
+        }
+        return back()->withInput()->with('error', 'User could not be deleted');
     }
 }

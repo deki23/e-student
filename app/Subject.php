@@ -12,6 +12,9 @@ class Subject extends Model
       'name',
       'ocena',
       'semestar',
+      'kolokvijum',
+      'seminarski',
+      'aktivnost',
       'user_id'
     ];
 
@@ -19,7 +22,8 @@ class Subject extends Model
       return $this->belongsTo('App\Student');
     }
 
-
-
+    public function exam(){
+      return $this->hasOne('App\Exam');
+    }
 
 }

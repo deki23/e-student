@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="col-md-9 col-lg-9 col-sm-9 pull-left">
-  <h1>Add new subject to user</h1>
+  <h1>Add new subject to student</h1>
       <div class="row col-md-12 col-lg-12 col-sm-12">
           <form  action="{{ route('subjects.store') }}" method="post">
                       {{ csrf_field() }}

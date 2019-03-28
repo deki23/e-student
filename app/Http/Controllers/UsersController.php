@@ -50,11 +50,6 @@ class UsersController extends Controller
     public function show(User $user)
     {
         //
-        if(Auth::user()->admin==1){
-
-        }
-
-        abort(401);
 
     }
 

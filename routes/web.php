@@ -16,14 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index');
-/*Route::get('/home', function () {
-    $users[] = Auth::user();
-    $users[] = Auth::guard()->user();
-    $users[] = Auth::guard('web')->user();
-    return view('home');
-})->name('home');*/
-  Route::get('students/home', 'StudentHomeController@index');
 Route::get('students/login', 'StudentAuth\LoginController@showLoginForm');
 Route::post('students/login', 'StudentAuth\LoginController@login');
 Route::post('students/logout', 'StudentAuth\LoginController@logout');
@@ -33,17 +25,26 @@ Route::get('students/password/reset', 'StudentAuth\ForgotPasswordController@show
 Route::get('students/password/reset/{token}', 'StudentAuth\ResetPasswordController@showResetForm');
 
 Route::group(['middleware' => 'auth:web'], function() {
-  //  Route::get('/home', 'HomeController@index');
-    Route::resource('students','StudentsController');
+    Route::get('/home', 'HomeController@index');
+    //Route::resource('students','StudentsController');
+    Route::get('students', 'StudentsController@index')->name('students.index');
+    Route::get('students/create', 'StudentsController@create')->name('students.create');
+    Route::get('subjects/create', 'SubjectsController@create')->name('subjects.create');
+    Route::get('subjects/create/{users_id?}', 'SubjectsController@create');
+    //Route::get('students/{student}', 'StudentsController@show')->name('students.show');
+    Route::get('subjects/{student}', 'SubjectsController@show')->name('subjects.show');
+    Route::delete('students/{student}', 'StudentsController@destroy')->name('students.destroy');
+    Route::get('students/{student}/edit', 'StudentsController@edit');
+    Route::put('students/{student}', 'StudentsController@update')->name('students.update');
+    Route::post('students', 'StudentsController@store')->name('students.store');
+    Route::post('subjects', 'SubjectsController@store')->name('subjects.store');
     //Route::resource('subjects', 'SubjectsController');
     Route::resource('users','UsersController');
-    Route::get('subjects/create/{users_id?}', 'SubjectsController@create');
+
 });
 
 
 Route::group(['middleware' => 'auth:student'], function() {
     Route::get('students/home', 'StudentHomeController@index');
     Route::get('subjects', 'SubjectsController@index');
-
-
 });

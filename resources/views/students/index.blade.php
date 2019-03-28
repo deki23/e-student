@@ -18,10 +18,10 @@
                   <th>Last Name</th>
                    <th>Verification number</th>
                    <th>Email</th>
-                   <th>Admin</th>
 
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>All subjects</th>
                     <th>Add subjects</th>
                  </thead>
   <tbody>
@@ -31,7 +31,6 @@
   <td>{{$student->last_name}}</td>
   <td>{{$student->br_indeksa}}</td>
   <td>{{$student->email}}</td>
-  <td>{{$student->admin}}</td>
   <td><a href="/students/{{$student->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
   <td>
 
@@ -43,6 +42,7 @@
 
 
   </td>
+  <td><a href="{{route('subjects.show', [$student])}}">All subjects</a></td>
   <td>
     <a href="subjects/create/{{$student->id}}">
             Add subjects
