@@ -15,11 +15,11 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('subject_id')->unsigned();
             $table->integer('score')->default(0);
             $table->boolean('status')->default(0);
+            $table->integer('subjects_id')->unsigned();
 
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('subjects_id')->references('id')->on('student_subjects');
             $table->timestamps();
         });
     }

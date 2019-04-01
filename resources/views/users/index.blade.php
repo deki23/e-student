@@ -16,7 +16,6 @@
 
                  <th>First Name</th>
                   <th>Last Name</th>
-                   <th>Verification number</th>
                    <th>Email</th>
                    <th>Admin</th>
 
@@ -28,7 +27,6 @@
   <tr>
   <td>{{$user->name}}</td>
   <td>{{$user->last_name}}</td>
-  <td>{{$user->br_indeksa}}</td>
   <td>{{$user->email}}</td>
   <td>{{$user->admin}}</td>
   <td><a href="/users/{{$user->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>

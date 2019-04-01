@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Student;
+
 
 class User extends Authenticatable
 {
@@ -28,9 +28,4 @@ class User extends Authenticatable
         'password','remember_token',
     ];
 
-    //protected $table = 'students';
-
-    public function subjects(){
-      return $this->hasMany('App\Subject');
-    }
 }

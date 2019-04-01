@@ -36,19 +36,6 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('br_indeksa') ? ' has-error' : '' }}">
-                            <label for="last_name" class="col-md-4 control-label">Broj indeksa</label>
-
-                            <div class="col-md-6">
-                                <input id="br_indeksa" type="text" class="form-control" name="br_indeksa" required>
-
-                                @if ($errors->has('br_indeksa'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('br_indeksa') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>

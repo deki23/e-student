@@ -16,12 +16,20 @@
     </thead>
     @foreach($subjects as $subject)
             <tr>
-                <td>{{$subject->name}}</td>
-                <td>{{$subject->semestar}}</td>
+                <td>{{$subject->subject->name}}</td>
+                <td>{{$subject->subject->semestar}}</td>
                 <td>{{$subject->kolokvijum}}</td>
                 <td>{{$subject->seminarski}}</td>
                 <td>{{$subject->aktivnost}}</td>
                 <td>{{$subject->ocena}}</td>
+                <td><a href="/studentsubjects/{{$subject->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
+                <td>
+                <form action="{{ route('studentsubjects.destroy', [$subject->id]) }}" method="post">
+                  {{csrf_field() }}
+                  {{method_field('DELETE') }}
+                  <button class="btn btn-xs btn-danger">Delete</buton>
+                </form>
+                </td>
             </tr>
     @endforeach
     </table>

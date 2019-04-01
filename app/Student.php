@@ -29,6 +29,8 @@ class Student extends Authenticatable
   ];
 
   public function subjects(){
-    return $this->hasMany('App\Subject');
+    return $this->hasMany('App\StudentSubject');
   }
+
+  
 }

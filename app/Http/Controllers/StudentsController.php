@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use App\Subject;
+use App\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,7 +75,7 @@ class StudentsController extends Controller
     public function show($id)
     {
         //
-        
+
     }
 
     /**
@@ -126,7 +127,7 @@ class StudentsController extends Controller
     {
         //
         $findUser = Student::where('id', $id);
-        $findSubjects = Subject::where('user_id', $id);
+        $findSubjects = StudentSubject::where('user_id', $id);
         $findSubjects->delete();
         if($findUser->delete()){
           return redirect()->route('students.index');

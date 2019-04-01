@@ -68,7 +68,8 @@
                                 <ul class="dropdown-menu" role="menu">
                                   <li><a href="{{route('register')}}">Add user</a></li>
                                   <li><a href="{{route('students.create')}}">Add student</a></li>
-                                  <li><a href="{{route('subjects.create')}}">Add subjects to students</a></li>
+                                  <li><a href="{{route('subjects.create')}}">Add subjects</a></li>
+                                  <li><a href="{{route('studentsubjects.create')}}">Add subject to student</a></li>
                                   <li><a href="{{route('users.index')}}">All users</a></li>
                                   <li><a href="{{route('students.index')}}">All students</a></li>
                                 </ul>

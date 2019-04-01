@@ -10,20 +10,16 @@ class Subject extends Model
 
     protected $fillable = [
       'name',
-      'ocena',
-      'semestar',
-      'kolokvijum',
-      'seminarski',
-      'aktivnost',
-      'user_id'
+      'semestar'
     ];
 
-    public function student(){
-      return $this->belongsTo('App\Student');
+    public function studentSubject(){
+      return $this->belongsToMany('App\Student');
     }
 
-    public function exam(){
-      return $this->hasOne('App\Exam');
+    public function studentSubjects(){
+      return $this->belongsTo('App\StudentSubject');
     }
+
 
 }

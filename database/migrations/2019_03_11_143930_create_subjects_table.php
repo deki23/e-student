@@ -16,14 +16,8 @@ class CreateSubjectsTable extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('ocena')->nullable();
             $table->integer('semestar');
-            $table->integer('user_id')->unsigned();
-            $table->integer('kolokvijum')->default(0);
-            $table->integer('seminarski')->default(0);
-            $table->integer('aktivnost')->default(0);
-            $table->foreign('user_id')->references('id')->on('students');
-            $table->timestamps('');
+            $table->timestamps();
         });
     }
 

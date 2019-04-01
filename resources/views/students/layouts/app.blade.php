@@ -60,20 +60,7 @@
                             <li><a href="{{ url('students/login') }}">Login</a></li>
                         @else
 
-                        @if(Auth::user()->admin==1)
-                          <li class="dropdown">
-                                <a href="#" class="dropdown-toggle"
-                                data-toggle="dropdown" role="button" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>  Admin <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                  <li><a href="{{route('register')}}">Add student</a></li>
-                                  <li><a href="{{route('subjects.create')}}">Add subjects to students</a></li>
-                                  <li><a href="{{route('users.index')}}">All Students</a></li>
-                                </ul>
-                            </li>
-                        @endif
-                        <li><a href="{{ url('subjects') }}">Subjects</a></li>
+                        <li><a href="{{ route('studentsubjects.index') }}">Subjects</a></li>
                              <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {{ Auth::user()->name }} {{Auth::user()->last_name}}<span class="caret"></span>

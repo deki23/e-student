@@ -84,8 +84,7 @@ class UsersController extends Controller
               ->update([
                     'name'=>$request->input('name'),
                     'last_name'=>$request->input('last_name'),
-                    'email'=>$request->input('email'),
-                    'br_indeksa'=>$request->input('br_indeksa')
+                    'email'=>$request->input('email')
                   ]);
 
         if($userUpdate){

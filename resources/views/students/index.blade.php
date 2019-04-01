@@ -44,7 +44,7 @@
   </td>
   <td><a href="{{route('subjects.show', [$student])}}">All subjects</a></td>
   <td>
-    <a href="subjects/create/{{$student->id}}">
+    <a href="studentsubjects/create/{{$student->id}}">
             Add subjects
           </a>
   </td>

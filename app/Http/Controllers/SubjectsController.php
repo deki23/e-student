@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Subject;
 use App\User;
 use App\Student;
+use App\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,11 @@ class SubjectsController extends Controller
     {
         //
 
-        if(Auth::check() ){
+        $subjects = Subject::all();
+        return view('subjects.index')
+              ->with('subjects', $subjects);
+
+      /*  if(Auth::check() ){
           $predmet =  Auth::user()->id;
           $subjects = Subject::where('user_id', $predmet)->get();
           return view('subjects.index')
@@ -27,7 +32,7 @@ class SubjectsController extends Controller
         }
 
         return view('auth.login');
-
+        */
 
     }
 
@@ -36,16 +41,10 @@ class SubjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($user_id = null)
+    public function create()
     {
       if(Auth::user()->admin==1){
-      $users=null;
-      if(!$user_id){
-        $users = User::where('id', $user_id);
-        return view('subjects.create')
-        ->with('users', Student::all());
-      }
-        return view('subjects.create', ['user_id'=>$user_id, 'users'=>$users]);
+        return view('subjects.create');
       }
         abort(401);
      }
@@ -64,13 +63,11 @@ class SubjectsController extends Controller
         $this->validate($request, [
             'name'=>'required|max:125',
             'semestar'=>'required',
-            'user_id'=>'required'
         ]);
         if (Auth::user()->admin==1) {
           $subject = new Subject;
           $subject->name = $request->input('name');
           $subject->semestar = $request->input('semestar');
-          $subject->user_id = $request->input('user_id');
           $subject->save();
 
           return redirect('students');
@@ -88,8 +85,8 @@ class SubjectsController extends Controller
     public function show($id)
     {
         //
-        $subjects = Subject::where('user_id', $id)->get();
-        return view('subjects.show')->with('subjects', $subjects);
+        $subjects = StudentSubject::where('user_id', $id)->get();
+        return view('subjects.show', ['subjects' => $subjects]);
     }
 
     /**
