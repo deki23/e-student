@@ -80,6 +80,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //
+
         $userUpdate = User::where('id', $user->id)
               ->update([
                     'name'=>$request->input('name'),
@@ -89,7 +90,7 @@ class UsersController extends Controller
 
         if($userUpdate){
             return redirect()->route('users.index')
-            ->with('success' , 'User updated successfully!');
+            ->with('status' , 'User updated successfully!');
         }
 
         return back()->withInput();

@@ -2,7 +2,12 @@
 
 @section('content')
 <div class="container">
-    <div class="row col-md-9 col-sd-3 col-md-offset-2 custyle">
+  @if (session('status'))
+  <div class="alert alert-success">
+      {{ session('status') }}
+  </div>
+  @endif
+    <div class="row col-md-9 col-sd-3 col-md-offset-1 custyle">
     <table class="table table-striped custab">
     <thead>
         <tr>

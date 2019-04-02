@@ -4,7 +4,11 @@
 <div class="container">
 <div class="row">
 
-
+  @if (session('status'))
+  <div class="alert alert-success">
+      {{ session('status') }}
+  </div>
+  @endif
       <div class="col-md-12">
       <h4>All users</h4>
       <div class="table-responsive">

@@ -19,10 +19,12 @@ Auth::routes();
 Route::get('students/login', 'StudentAuth\LoginController@showLoginForm');
 Route::post('students/login', 'StudentAuth\LoginController@login');
 Route::post('students/logout', 'StudentAuth\LoginController@logout');
-Route::post('students/password/email', 'StudentAuth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('students/password/reset', 'StudentAuth\ResetPasswordController@reset');
 Route::get('students/password/reset', 'StudentAuth\ForgotPasswordController@showLinkRequestForm');
 Route::get('students/password/reset/{token}', 'StudentAuth\ResetPasswordController@showResetForm');
+Route::post('students/password/email', 'StudentAuth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('students/password/reset', 'StudentAuth\ResetPasswordController@reset');
+
+
 
 Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/home', 'HomeController@index');
@@ -34,7 +36,7 @@ Route::group(['middleware' => 'auth:web'], function() {
     Route::get('students/create', 'StudentsController@create')->name('students.create');
     Route::get('subjects/create', 'SubjectsController@create')->name('subjects.create');
     Route::get('studentsubjects/create', 'StudentSubjectsController@create')->name('studentsubjects.create');
-    Route::get('subjects', 'SubjectsController@index');
+    Route::get('subjects', 'SubjectsController@index')->name('subjects.index');
     Route::get('studentsubjects/create/{users_id?}', 'StudentSubjectsController@create');
 
     Route::get('subjects/{student}', 'SubjectsController@show')->name('subjects.show');

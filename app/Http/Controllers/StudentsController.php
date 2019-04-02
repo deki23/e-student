@@ -111,7 +111,7 @@ class StudentsController extends Controller
                   ]);
 
         if($studentUpdate){
-            return redirect()->route('students.index');
+            return redirect()->route('students.index')->with('status', 'Student updated successfully!');
         }
 
         return back()->withInput();

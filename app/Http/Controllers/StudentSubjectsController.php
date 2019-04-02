@@ -40,8 +40,7 @@ class StudentSubjectsController extends Controller
           $subjects = Subject::all();
           $users=null;
           if(!$user_id){
-            $users = Student::where('id', $user_id);
-            $users = Student::all();
+            $users = Student::get();
             return view('studentsubjects.create', ['users' => $users, 'subjects' => $subjects]);
           }
 
@@ -109,6 +108,13 @@ class StudentSubjectsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $subjects = StudentSubject::where('id', $id)->get()->first();
+
+        $this->validate($request, [
+          'kolokvijum'=>'numeric|min:15|max:30',
+          'seminarski'=>'numeric|min:5|max:10',
+          'aktivnost'=>'numeric|min:5|max:10'
+        ]);
 
         $subjectsUpdate = StudentSubject::where('id', $id)
               ->update([
@@ -118,7 +124,7 @@ class StudentSubjectsController extends Controller
                   ]);
 
         if($subjectsUpdate){
-            return redirect()->route('students.index');
+            return redirect()->route('subjects.show', [$subjects->student->id])->with('status', 'Subject updated!');
         }
 
         return back()->withInput();

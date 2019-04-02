@@ -70,6 +70,7 @@
                                   <li><a href="{{route('students.create')}}">Add student</a></li>
                                   <li><a href="{{route('subjects.create')}}">Add subjects</a></li>
                                   <li><a href="{{route('studentsubjects.create')}}">Add subject to student</a></li>
+                                  <li><a href="{{route('subjects.index')}}">All subjects</a></li>
                                   <li><a href="{{route('users.index')}}">All users</a></li>
                                   <li><a href="{{route('students.index')}}">All students</a></li>
                                 </ul>

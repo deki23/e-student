@@ -20,19 +20,9 @@ class SubjectsController extends Controller
     {
         //
 
-        $subjects = Subject::all();
+        $subjects = Subject::orderBy('semestar', 'asc')->get();
         return view('subjects.index')
               ->with('subjects', $subjects);
-
-      /*  if(Auth::check() ){
-          $predmet =  Auth::user()->id;
-          $subjects = Subject::where('user_id', $predmet)->get();
-          return view('subjects.index')
-                ->with('subjects', $subjects);
-        }
-
-        return view('auth.login');
-        */
 
     }
 
