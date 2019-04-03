@@ -73,6 +73,7 @@
                                   <li><a href="{{route('subjects.index')}}">All subjects</a></li>
                                   <li><a href="{{route('users.index')}}">All users</a></li>
                                   <li><a href="{{route('students.index')}}">All students</a></li>
+                                  <li><a href="{{route('exams.index')}}">All exams</a></li>
                                 </ul>
                             </li>
                         @endif

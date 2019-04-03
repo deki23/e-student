@@ -8,12 +8,12 @@ class Exam extends Model
 {
     //
     protected $fillable = [
-      'subject_id',
+      'status',
       'score'
     ];
 
     public function subject(){
-      return $this->belongsTo('App\StudentSubject');
+      return $this->belongsTo('App\StudentSubject', 'subjects_id', 'id');
     }
 
 }

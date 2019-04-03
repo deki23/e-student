@@ -12,19 +12,17 @@
       <div class="col-md-12">
       <h4>All users</h4>
       <div class="table-responsive">
-
-
-            <table id="mytable" class="table table-bordred table-striped">
+            <table class="table table-bordered table-striped">
 
                  <thead>
-
                  <th>First Name</th>
                   <th>Last Name</th>
                    <th>Email</th>
+                    @if(Auth::user()->admin==1)
                    <th>Admin</th>
-
                     <th>Edit</th>
                     <th>Delete</th>
+                    @endif
                  </thead>
   <tbody>
 @foreach($users as $user)
@@ -32,7 +30,28 @@
   <td>{{$user->name}}</td>
   <td>{{$user->last_name}}</td>
   <td>{{$user->email}}</td>
-  <td>{{$user->admin}}</td>
+  @if(Auth::user()->admin==1)
+  @if(!$user->admin)
+  <td><form action="{{ route('users.update', [$user]) }}" method="POST">
+      {{ csrf_field() }}
+      <input type="hidden" name="_method" value="put">
+      <input type="hidden" name="admin" value="1">
+      <button class="btn btn-xs btn-success">
+          Make admin
+      </button>
+  </form>
+  </td>
+  @else
+  <td><form action="{{ route('users.update', [$user->id]) }}" method="POST">
+      {{ csrf_field() }}
+      <input type="hidden" name="_method" value="put">
+      <input type="hidden" name="admin" value="0">
+      <button class="btn btn-xs btn-danger">
+          Remove admin
+      </button>
+  </form>
+  </td>
+  @endif
   <td><a href="/users/{{$user->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
   <td>
       @if(Auth::id() !== $user->id)
@@ -45,6 +64,7 @@
 
       @endif
   </td>
+  @endif
   </tr>
 
 @endforeach

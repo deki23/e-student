@@ -25,6 +25,6 @@ class StudentSubject extends Model
     }
 
     public function exam(){
-      return $this->hasOne('App\Exam');
+      return $this->hasOne('App\Exam', 'subjects_id');
     }
 }

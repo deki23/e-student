@@ -80,18 +80,27 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //
-
+        if(!$request->has('admin')){
         $userUpdate = User::where('id', $user->id)
               ->update([
                     'name'=>$request->input('name'),
                     'last_name'=>$request->input('last_name'),
-                    'email'=>$request->input('email')
+                    'email'=>$request->input('email'),
                   ]);
 
         if($userUpdate){
             return redirect()->route('users.index')
             ->with('status' , 'User updated successfully!');
         }
+      }
+      $userUpdate = User::where('id', $user->id)
+            ->update([
+                  'admin'=>$request->input('admin')
+                ]);
+      if($userUpdate){
+                  return redirect()->route('users.index')
+                  ->with('status' , 'User updated successfully!');
+                }
 
         return back()->withInput();
     }
@@ -106,8 +115,6 @@ class UsersController extends Controller
     {
         if(Auth::user()->admin==1){
         $findUser = User::where('id', $id);
-        $findSubjects = Subject::where('user_id', $id);
-        $findSubjects->delete();
         if($findUser->delete()){
           return redirect()->route('users.index');
         }

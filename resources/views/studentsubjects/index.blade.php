@@ -2,7 +2,18 @@
 
 @section('content')
 <div class="container">
-    <div class="row col-md-9 col-sd-3 col-md-offset-2 custyle">
+    @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+    <div class="row col-md-9 col-sd-3 col-md-offset-1 custyle">
     <table class="table table-striped custab">
     <thead>
         <tr>
@@ -23,7 +34,27 @@
                   <td>{{$subject->seminarski}}</td>
                   <td>{{$subject->aktivnost}}</td>
                   <td>{{$subject->ocena}}</td>
-                  <td>Prijavi ispit</td>
+                  <td>
+                    @if(!$subject->exam)
+                        <form action="{{ route('exams.store') }}" method="POST">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="subjects_id" value="{{$subject->id}}">
+                            <button class="btn btn-xs btn-success">
+                                Prijavi ispit
+                            </button>
+                        </form>
+                    @else
+
+                        <form action="{{ route('exams.destroy', [$subject->exam->id]) }}" method="post">
+                          {{csrf_field() }}
+                          {{method_field('DELETE') }}
+                          <button class="btn btn-xs btn-danger">
+                              Odjavi ispit
+                          </button>
+                        </form>
+                    @endif
+
+                  </td>
             </tr>
     @endforeach
     </table>

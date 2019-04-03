@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Exam;
+use App\StudentSubject;
 
 class ExamsController extends Controller
 {
@@ -14,6 +16,8 @@ class ExamsController extends Controller
     public function index()
     {
         //
+
+        return view('exams.index')->with('exams', Exam::get());
     }
 
     /**
@@ -24,6 +28,7 @@ class ExamsController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -35,6 +40,22 @@ class ExamsController extends Controller
     public function store(Request $request)
     {
         //
+
+        $this->validate($request, [
+            'subjects_id'=>'required'
+        ]);
+        $proveri = $request->input('subjects_id');
+        $bodovi = StudentSubject::where('subject_id', $proveri)->first();
+        $pio = $bodovi->kolokvijum + $bodovi->aktivnost + $bodovi->seminarski;
+        if($pio >= 25){
+        $exam = new Exam;
+        $exam->subjects_id =  $request->input('subjects_id');
+        $exam->save();
+        return redirect('studentsubjects')->with('status', 'Uspesno ste prijavili ispit.');
+        }
+
+        return redirect()->route('studentsubjects.index')->with('error', 'Nije moguce prijaviti ispit,
+        proverite da li su vam upisane predispitne obaveze!');
     }
 
     /**
@@ -80,5 +101,8 @@ class ExamsController extends Controller
     public function destroy($id)
     {
         //
+        $findExam = Exam::find($id);
+        $findExam->delete();
+        return redirect()->route('studentsubjects.index')->with('status', 'Uspesno ste odjavili ispit.');
     }
 }
