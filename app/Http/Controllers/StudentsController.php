@@ -20,7 +20,7 @@ class StudentsController extends Controller
     public function index()
     {
         //
-        return view('students.index')->with('students', Student::all());
+        return view('students.index')->with('students', Student::paginate(5));
     }
 
     /**

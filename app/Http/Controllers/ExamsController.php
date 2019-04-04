@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exam;
 use App\StudentSubject;
+use Auth;
 
 class ExamsController extends Controller
 {
@@ -28,6 +29,8 @@ class ExamsController extends Controller
     public function create()
     {
         //
+
+
 
     }
 
@@ -78,6 +81,8 @@ class ExamsController extends Controller
     public function edit($id)
     {
         //
+        $exam = Exam::find($id);
+        return view('exams.edit', ['exam'=>$exam]);
     }
 
     /**
@@ -90,6 +95,23 @@ class ExamsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+          'score'=>'numeric|min:26|max:50',
+          'status'=>'required'
+                ]);
+
+      $examUpdate = Exam::where('id', $id)
+              ->update([
+                    'score'=>$request->input('score'),
+                    'status'=>$request->input('status')
+          ]);
+
+      if($examUpdate){
+        return redirect()->route('exams.index')->with('status', 'Uspesno ste uneli ispitne bodove!');
+      }
+
+      return redirect()->route('exams.index')->with('error', 'Nije moguce uneti bodove, obratite se tehnickoj podrsci.');
+
     }
 
     /**

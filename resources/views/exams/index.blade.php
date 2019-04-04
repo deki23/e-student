@@ -2,30 +2,58 @@
 
 @section('content')
 <div class="container">
-<div class="row">
-      <div class="col-md-12">
+  @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+  @endif
+  <div class="row">
+    <div class="col-md-12">
       <h4>All exams</h4>
       <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                 <thead>
-                 <th>Score</th>
-                 <th>Status</th>
-                 <th>Student</th>
-                 <th>Broj indeksa</th>
-                 </thead>
-  <tbody>
-    @foreach($exams as $exam)
-  <tr>
-  <td>{{$exam->score}}</td>
-  <td>{{$exam->status}}</td>
-  <td>{{$exam->subject->student->name}} {{$exam->subject->student->last_name}}</td>
-  <td>{{$exam->subject->student->br_indeksa}}</td>
-  </tr>
-  @endforeach
-  </tbody>
-</table>
-          </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Student</th>
+            <th>Broj indeksa</th>
+            <th>Unesi bodove</th>
+            <th>Obrisi prijavu</th>
+            <th>Upisi ocenu</th>
+          </thead>
+          <tbody>
+            @foreach($exams as $exam)
+            <tr>
+              <td>{{$exam->score}}</td>
+              <td>{{$exam->status}}</td>
+              <td>{{$exam->subject->student->name}} {{$exam->subject->student->last_name}}</td>
+              <td>{{$exam->subject->student->br_indeksa}}</td>
+              <td><a href="/exams/{{$exam->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
+              <td>
+                <form action="{{ route('exams.destroy', [$exam->id]) }}" method="post">
+                  {{csrf_field() }}
+                  {{method_field('DELETE') }}
+                  <button class="btn btn-xs btn-danger">
+                    Obrisi prijavu
+                  </button>
+                </form>
+              </td>
+              <td>
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('studentsubjects.update', [$exam->subject->id]) }}">
+                  {{ csrf_field() }}
+                  <input type="hidden" name="_method" value="put">
+
+                  <input type="hidden" name="ocena" value="{{$exam->score}}">
+                  <button class="btn btn-xs btn-success">
+                    Upisi ocenu
+                  </button>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
-</div>
+    </div>
+  </div>
 </div>
 @endsection

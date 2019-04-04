@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapStudentRoutes()
     {
         Route::group([
-            'middleware' => ['web', 'student', 'auth:student'],
+            'middleware' => ['student', 'auth:student'],
             'prefix' => 'student',
             'as' => 'student.',
             'namespace' => $this->namespace,

@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    
 
     <!-- Scripts -->
     <script>
@@ -60,7 +62,7 @@
                             <li><a href="{{ url('students/login') }}">Login</a></li>
                         @else
 
-                        <li><a href="{{ route('studentsubjects.index') }}">Subjects</a></li>
+                        <li><a href="{{ route('studentsubjects.index') }}"><i class="fas fa-clipboard-list"></i> Subjects</a></li>
                              <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {{ Auth::user()->name }} {{Auth::user()->last_name}}<span class="caret"></span>

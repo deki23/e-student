@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function index()
     {
         //
-        return view('users.index')->with('users', Auth::user()->all());
+        return view('users.index')->with('users', Auth::user()->paginate(5));
     }
 
     /**
@@ -99,7 +99,7 @@ class UsersController extends Controller
                 ]);
       if($userUpdate){
                   return redirect()->route('users.index')
-                  ->with('status' , 'User updated successfully!');
+                  ->with('status' , 'Granted admin permissions successfully!');
                 }
 
         return back()->withInput();

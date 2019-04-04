@@ -110,11 +110,12 @@ class StudentSubjectsController extends Controller
         //
         $subjects = StudentSubject::where('id', $id)->get()->first();
 
-        $this->validate($request, [
-          'kolokvijum'=>'numeric|min:15|max:30',
-          'seminarski'=>'numeric|min:5|max:10',
-          'aktivnost'=>'numeric|min:5|max:10'
-        ]);
+        if (!$request->has('ocena')) {
+          $this->validate($request, [
+            'kolokvijum'=>'numeric|min:15|max:30',
+            'seminarski'=>'numeric|min:5|max:10',
+            'aktivnost'=>'numeric|min:5|max:10'
+          ]);
 
         $subjectsUpdate = StudentSubject::where('id', $id)
               ->update([
@@ -122,7 +123,30 @@ class StudentSubjectsController extends Controller
                     'seminarski'=>$request->input('seminarski'),
                     'aktivnost'=>$request->input('aktivnost')
                   ]);
+        }
+        else {
+          $this->validate($request, [
+            'ocena'=>'numeric|min:26|max:50'
+          ]);
 
+          $ispit = $request->input('ocena');
+          $bodovi = $subjects->kolokvijum + $subjects->seminarski + $subjects->aktivnost + $ispit;
+          switch ($bodovi) {
+            case 'value':
+              // code...
+              break;
+
+            default:
+              // code...
+              break;
+          }
+
+          $subjectsUpdate = StudentSubject::where('id', $id)
+              ->update([
+                'ocena'=>$ocena
+          ]);
+
+        }
         if($subjectsUpdate){
             return redirect()->route('subjects.show', [$subjects->student->id])->with('status', 'Subject updated!');
         }

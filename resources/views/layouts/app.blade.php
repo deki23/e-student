@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -50,7 +50,49 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                      @if (Auth::guest())
+                      @else
+                      <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"
+                            data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fas fa-users"></i> Users <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="{{route('register')}}">Add user</a></li>
+                              <li><a href="{{route('users.index')}}">All users</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle"
+                              data-toggle="dropdown" role="button" aria-expanded="false">
+                              <i class="fas fa-user-graduate"></i> Students <span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{route('students.create')}}">Add student</a></li>
+                                <li><a href="{{route('students.index')}}">All students</a></li>
+                              </ul>
+                          </li>
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle"
+                              data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-clipboard-list"></i> Subjects <span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{route('subjects.create')}}">Add subjects</a></li>
+                                <li><a href="{{route('studentsubjects.create')}}">Add subject to student</a></li>
+                                <li><a href="{{route('subjects.index')}}">All subjects</a></li>
+                              </ul>
+                          </li>
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle"
+                              data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fas fa-chalkboard-teacher"></i> Exams<span class="caret"></span>
+                              </a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{route('exams.index')}}">All exams</a></li>
+                              </ul>
+                          </li>
+                          @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -59,24 +101,7 @@
                         @if (Auth::guest())
                             <li><a href="{{ url('students/login') }}">Login</a></li>
                         @else
-                        @if(Auth::user()->admin==1)
-                          <li class="dropdown">
-                                <a href="#" class="dropdown-toggle"
-                                data-toggle="dropdown" role="button" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>  Admin <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                  <li><a href="{{route('register')}}">Add user</a></li>
-                                  <li><a href="{{route('students.create')}}">Add student</a></li>
-                                  <li><a href="{{route('subjects.create')}}">Add subjects</a></li>
-                                  <li><a href="{{route('studentsubjects.create')}}">Add subject to student</a></li>
-                                  <li><a href="{{route('subjects.index')}}">All subjects</a></li>
-                                  <li><a href="{{route('users.index')}}">All users</a></li>
-                                  <li><a href="{{route('students.index')}}">All students</a></li>
-                                  <li><a href="{{route('exams.index')}}">All exams</a></li>
-                                </ul>
-                            </li>
-                        @endif
+
                              <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                   {{ Auth::user()->name }} {{Auth::user()->last_name}}<span class="caret"></span>

@@ -20,7 +20,7 @@ class SubjectsController extends Controller
     {
         //
 
-        $subjects = Subject::orderBy('semestar', 'asc')->get();
+        $subjects = Subject::orderBy('semestar', 'asc')->paginate(5);
         return view('subjects.index')
               ->with('subjects', $subjects);
 
@@ -60,7 +60,7 @@ class SubjectsController extends Controller
           $subject->semestar = $request->input('semestar');
           $subject->save();
 
-          return redirect('students');
+          return redirect('subjects');
         }
 
         abort(401);

@@ -28,39 +28,35 @@ Route::post('students/password/reset', 'StudentAuth\ResetPasswordController@rese
 
 Route::group(['middleware' => 'auth:web'], function() {
     Route::get('/home', 'HomeController@index');
-    //Route::resource('students','StudentsController');
-    //Route::get('students/{student}', 'StudentsController@show')->name('students.show');
-    //Route::resource('subjects', 'SubjectsController');
-    //Route::get('subjects/create/{users_id?}', 'SubjectsController@create');
-    Route::get('students', 'StudentsController@index')->name('students.index');
-    Route::get('/exams', 'ExamsController@index')->name('exams.index');
-    Route::get('students/create', 'StudentsController@create')->name('students.create');
-    Route::get('subjects/create', 'SubjectsController@create')->name('subjects.create');
-    Route::get('studentsubjects/create', 'StudentSubjectsController@create')->name('studentsubjects.create');
-    Route::get('subjects', 'SubjectsController@index')->name('subjects.index');
-    Route::get('studentsubjects/create/{users_id?}', 'StudentSubjectsController@create');
 
-
-    Route::get('subjects/{student}', 'SubjectsController@show')->name('subjects.show');
-    Route::delete('students/{student}', 'StudentsController@destroy')->name('students.destroy');
-    Route::delete('subject/{student}', 'StudentSubjectsController@destroy')->name('studentsubjects.destroy');
-
-    Route::get('students/{student}/edit', 'StudentsController@edit');
-    Route::get('studentsubjects/{subject}/edit', 'StudentSubjectsController@edit');
-    Route::put('students/{student}', 'StudentsController@update')->name('students.update');
-    Route::put('studentsubjects/{student}', 'StudentSubjectsController@update')->name('studentsubjects.update');
-    Route::post('students', 'StudentsController@store')->name('students.store');
-    Route::post('subjects', 'SubjectsController@store')->name('subjects.store');
-    Route::post('studentsubjects', 'StudentSubjectsController@store')->name('studentsubjects.store');
+    Route::resource('subjects', 'SubjectsController');
+    Route::resource('studentsubjects', 'StudentSubjectsController', ['except'=>'index']);
     Route::resource('users','UsersController');
+    Route::resource('exams', 'ExamsController', ['except'=>['store', 'destroy']]);
+
+    Route::get('students', 'StudentsController@index')->name('students.index');
+    //Route::get('/exams', 'ExamsController@index')->name('exams.index');
+    Route::get('students/create', 'StudentsController@create')->name('students.create');
+    Route::get('studentsubjects/create/{users_id?}', 'StudentSubjectsController@create');
+    Route::get('students/{student}/edit', 'StudentsController@edit');
+    //Route::get('exams/{exam}/edit', 'ExamsController@edit')->name('exams.edit');
+
+
+    Route::delete('students/{student}', 'StudentsController@destroy')->name('students.destroy');
+
+    //Route::put('exams/{exam}', 'ExamsController@update')->name('exams.update');
+    Route::put('students/{student}', 'StudentsController@update')->name('students.update');
+    Route::post('students', 'StudentsController@store')->name('students.store');
+    //Route::post('subjects', 'SubjectsController@store')->name('subjects.store');
+
 
 });
 
 
 Route::group(['middleware' => 'auth:student'], function() {
     Route::get('students/home', 'StudentHomeController@index');
-    Route::get('studentsubjects', 'StudentSubjectsController@index')->name('studentsubjects.index');
-    Route::post('exams', 'ExamsController@store')->name('exams.store');
-    Route::delete('exams/{exam}', 'ExamsController@destroy')->name('exams.destroy');
+    Route::resource('studentsubjects', 'StudentSubjectsController', ['only'=>'index']);
+    Route::resource('exams', 'ExamsController', ['only'=>['store', 'destroy']]);
+
 
 });
