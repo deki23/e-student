@@ -17,8 +17,8 @@
             <th>Status</th>
             <th>Student</th>
             <th>Broj indeksa</th>
+            <th>Predmet</th>
             <th>Unesi bodove</th>
-            <th>Obrisi prijavu</th>
             <th>Upisi ocenu</th>
           </thead>
           <tbody>
@@ -28,16 +28,8 @@
               <td>{{$exam->status}}</td>
               <td>{{$exam->subject->student->name}} {{$exam->subject->student->last_name}}</td>
               <td>{{$exam->subject->student->br_indeksa}}</td>
+              <td>{{$exam->subject->subject->name}}</td>
               <td><a href="/exams/{{$exam->id}}/edit"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></a></td>
-              <td>
-                <form action="{{ route('exams.destroy', [$exam->id]) }}" method="post">
-                  {{csrf_field() }}
-                  {{method_field('DELETE') }}
-                  <button class="btn btn-xs btn-danger">
-                    Obrisi prijavu
-                  </button>
-                </form>
-              </td>
               <td>
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('studentsubjects.update', [$exam->subject->id]) }}">
                   {{ csrf_field() }}
@@ -47,11 +39,13 @@
                   <button class="btn btn-xs btn-success">
                     Upisi ocenu
                   </button>
+                </form>
               </td>
             </tr>
             @endforeach
           </tbody>
         </table>
+        {{$exams->links()}}
       </div>
     </div>
   </div>

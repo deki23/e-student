@@ -75,8 +75,6 @@ class SubjectsController extends Controller
     public function show($id)
     {
         //
-        $subjects = StudentSubject::where('user_id', $id)->get();
-        return view('subjects.show', ['subjects' => $subjects]);
     }
 
     /**
@@ -111,5 +109,6 @@ class SubjectsController extends Controller
     public function destroy(Subject $subject)
     {
         //
+
     }
 }

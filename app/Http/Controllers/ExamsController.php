@@ -18,7 +18,7 @@ class ExamsController extends Controller
     {
         //
 
-        return view('exams.index')->with('exams', Exam::get());
+        return view('exams.index')->with('exams', Exam::orderBy('status', 'asc')->paginate(5));
     }
 
     /**
@@ -48,7 +48,7 @@ class ExamsController extends Controller
             'subjects_id'=>'required'
         ]);
         $proveri = $request->input('subjects_id');
-        $bodovi = StudentSubject::where('subject_id', $proveri)->first();
+        $bodovi = StudentSubject::where('id', $proveri)->first();
         $pio = $bodovi->kolokvijum + $bodovi->aktivnost + $bodovi->seminarski;
         if($pio >= 25){
         $exam = new Exam;

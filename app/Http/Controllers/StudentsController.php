@@ -87,9 +87,12 @@ class StudentsController extends Controller
     public function edit($id)
     {
         //
+        if(Auth::user()->admin==1){
         $user = Student::find($id);
 
         return view('students.edit', ['user'=>$user]);
+      }
+        abort(401);
     }
 
     /**
@@ -126,12 +129,16 @@ class StudentsController extends Controller
     public function destroy($id)
     {
         //
+        if(Auth::user()->admin==1){
         $findUser = Student::where('id', $id);
         $findSubjects = StudentSubject::where('user_id', $id);
         $findSubjects->delete();
         if($findUser->delete()){
           return redirect()->route('students.index');
         }
-        return back()->withInput()->with('error', 'User could not be deleted');
+        return back()->withInput()->with('error', 'Student could not be deleted');
+      }
+        abort(401);
+
     }
 }

@@ -36,17 +36,16 @@ class StudentSubjectsController extends Controller
     public function create($user_id=null)
     {
         //
-        if(Auth::user()->admin==1){
+
           $subjects = Subject::all();
           $users=null;
           if(!$user_id){
             $users = Student::get();
             return view('studentsubjects.create', ['users' => $users, 'subjects' => $subjects]);
           }
-
           return view('studentsubjects.create', ['user_id'=>$user_id, 'users'=>$users, 'subjects'=>$subjects]);
-          }
-            abort(401);
+
+
     }
 
     /**
@@ -62,15 +61,13 @@ class StudentSubjectsController extends Controller
             'user_id'=>'required',
             'subject_id'=>'required'
         ]);
-        if (Auth::user()->admin==1) {
-          $subject = new StudentSubject;
-          $subject->user_id = $request->input('user_id');
-          $subject->subject_id = $request->input('subject_id');
-          $subject->save();
 
-          return redirect('students');
-        }
-        abort(401);
+        $subject = new StudentSubject;
+        $subject->user_id = $request->input('user_id');
+        $subject->subject_id = $request->input('subject_id');
+        $subject->save();
+
+        return redirect()->route('studentsubjects.show', ['studentsubject'=>$subject->user_id]);
     }
 
     /**
@@ -82,6 +79,9 @@ class StudentSubjectsController extends Controller
     public function show($id)
     {
         //
+        $subjects = StudentSubject::where('user_id', $id)->get();
+        $student = Student::find($id);
+        return view('studentsubjects.show', ['subjects' => $subjects, 'student'=>$student]);
     }
 
     /**
@@ -108,7 +108,7 @@ class StudentSubjectsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $subjects = StudentSubject::where('id', $id)->get()->first();
+        $subjects = StudentSubject::where('id', $id)->first();
 
         if (!$request->has('ocena')) {
           $this->validate($request, [
@@ -131,24 +131,28 @@ class StudentSubjectsController extends Controller
 
           $ispit = $request->input('ocena');
           $bodovi = $subjects->kolokvijum + $subjects->seminarski + $subjects->aktivnost + $ispit;
-          switch ($bodovi) {
-            case 'value':
-              // code...
-              break;
-
-            default:
-              // code...
-              break;
-          }
+          if($bodovi<60)
+            $ocena=6;
+          elseif($bodovi<70)
+            $ocena=7;
+          elseif($bodovi<80)
+            $ocena=8;
+          elseif($bodovi<90)
+            $ocena=9;
+          elseif($bodovi<=100)
+            $ocena=10;
 
           $subjectsUpdate = StudentSubject::where('id', $id)
               ->update([
                 'ocena'=>$ocena
           ]);
 
+          if($subjectsUpdate){
+              return redirect()->route('studentsubjects.show', [$subjects->student->id])->with('status', 'Ocena upisana!');
+          }
         }
         if($subjectsUpdate){
-            return redirect()->route('subjects.show', [$subjects->student->id])->with('status', 'Subject updated!');
+            return redirect()->route('studentsubjects.show', [$subjects->student->id])->with('status', 'Subject updated!');
         }
 
         return back()->withInput();
@@ -164,12 +168,13 @@ class StudentSubjectsController extends Controller
     {
         //
         if(Auth::user()->admin==1){
-        $subject = StudentSubject::where('id', $id);
+        $subject = StudentSubject::where('id', $id)->first();
+        $user_id = $subject->user_id;
         $subject->delete();
         if($subject->delete()){
-          return redirect()->route('users.index');
+          return redirect()->route('studentsubjects.show', [$user_id]);
         }
-        return back()->withInput()->with('error', 'User could not be deleted');
+        return back()->withInput()->with('error', 'Subject could not be deleted');
         }
         abort(401);
     }
