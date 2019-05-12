@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Student;
 use App\User;
+use App\Exam;
 use App\Subject;
 use App\StudentSubject;
 use Auth;
@@ -169,9 +170,11 @@ class StudentSubjectsController extends Controller
         //
         if(Auth::user()->admin==1){
         $subject = StudentSubject::where('id', $id)->first();
+        $exam = Exam::where('subjects_id', $id)->first();
         $user_id = $subject->user_id;
+        $exam->delete();
         $subject->delete();
-        if($subject->delete()){
+        if(($subject->delete())&&($exam->delete())){
           return redirect()->route('studentsubjects.show', [$user_id]);
         }
         return back()->withInput()->with('error', 'Subject could not be deleted');

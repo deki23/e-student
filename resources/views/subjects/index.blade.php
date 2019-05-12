@@ -8,12 +8,24 @@
         <tr>
             <th>Ime predmeta</th>
             <th>Semestar</th>
+            @if(Auth::user()->admin==1)
+              <th>Delete</th>
+            @endif
         </tr>
     </thead>
     @foreach($subjects as $subject)
             <tr>
                 <td>{{$subject->name}}</td>
                 <td>{{$subject->semestar}}</td>
+                @if(Auth::user()->admin==1)
+                  <td>
+                    <form action="{{ route('subjects.destroy', [$subject->id]) }}" method="post">
+                      {{csrf_field() }}
+                      {{method_field('DELETE') }}
+                      <button class="btn btn-xs btn-danger">Delete</buton>
+                    </form>
+                  </td>
+                @endif
             </tr>
     @endforeach
     </table>

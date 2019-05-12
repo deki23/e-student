@@ -106,9 +106,18 @@ class SubjectsController extends Controller
      * @param  \App\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy($id)
     {
         //
+        if(Auth::user()->admin==1){
+        $findSubject = Subject::where('id', $id)->first();
+        $findSubject->delete();
+        if($findSubject->delete()){
+          return redirect()->route('subjects.index');
+        }
+        return back()->withInput()->with('error', 'Student could not be deleted');
+      }
+        abort(401);
 
     }
 }
