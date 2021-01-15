@@ -39,7 +39,7 @@ class RegisterController extends Controller
      */
 
      public function __construct(){
-      $this->middleware('auth:web');
+//      $this->middleware();
     }
     /**
      * Get a validator for an incoming registration request.
