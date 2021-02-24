@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,11 +68,11 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @if (Auth::check())
+                    @auth
                         <a href="{{ url('students/home') }}">Home</a>
                     @else
                         <a href="{{ url('students/login') }}">Login</a>
-                    @endif
+                    @endauth
                 </div>
             @endif
 
